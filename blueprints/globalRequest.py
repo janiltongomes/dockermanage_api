@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import asyncio
 from functools import wraps
 
@@ -11,7 +14,6 @@ def authorized():
     def decorator(f):
         @wraps(f)
         async def decorated_function(request, *args, **kwargs):
-
             
             is_authorized = False
             authorization = request.headers['Authorization'] if 'Authorization' in request.headers else None

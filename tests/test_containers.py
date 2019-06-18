@@ -1,13 +1,13 @@
-#import string
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import unittest
 import sys
 import json
 
-
-
 class TestContainers(unittest.TestCase):
 
-    @unittest.skipIf('docker' not in sys.modules, "Requires module Docker in python")
+    #@unittest.skipIf('docker' not in sys.modules, "Requires module Docker in python")
     def test_get_containers_list(self):
         from application import app
         request, response = app.test_client.get('/api/containers/list')

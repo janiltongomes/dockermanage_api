@@ -1,18 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-#from repository.promotionRepository import Repository, UserRepository, RepositoryQueue
-from datetime import date, time, datetime, timedelta
 import requests
 import json
 import asyncio
-#import subprocess
-#from subprocess import call
-#import uuid
 import time
-#from dateutil.parser import parse
 
 import docker
+from docker import errors
+
 client = docker.from_env()
 
 
@@ -45,7 +41,7 @@ class Containers:
         return responseData, requestCode
 
 
-    async def startContainers(self, containerId):
+    async def startContainer(self, containerId):
         requestCode = 500
         if containerId is not None:
             filterData = {'id' : containerId }
@@ -63,7 +59,7 @@ class Containers:
         return requestCode
 
 
-    async def stopContainers(self, containerId):
+    async def stopContainer(self, containerId):
         requestCode = 500
         if containerId is not None:
             filterData = {'id' : containerId }
@@ -80,21 +76,19 @@ class Containers:
         
         return requestCode
 
+    async def removeContainer(self, containerId):
+        requestCode = 500
+        if containerId is not None:
+            filterData = {'id' : containerId }
 
-    async def listImages(self, request):
-        requestCode = 200
-
-        responseData = {}
         try:
-            responseData['data'] = []
-            for container in self.client.images.list():
-                responseData['data'].append(container)
+            for container in self.client.containers.list(all=True, filters=filterData):
+                container.remove()
+                requestCode = 200
             
 
         except Exception as e:
-            requestCode = 500
-            responseData = {}
-            #responseReturn['errno'] = e['errno']
-            #responseReturn['explanation'] = str(e['explanation'])
+            pass
+
         
-        return responseData, requestCode
+        return requestCode
