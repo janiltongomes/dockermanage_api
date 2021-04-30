@@ -26,7 +26,7 @@ sanic==19.3.1
 sanic-validation==0.4.4
 six==1.12.0
 ujson==1.35
-urllib3==1.25.3
+urllib3==1.25.8
 uvloop==0.12.2
 virtualenv==16.6.1
 websocket-client==0.56.0
